@@ -1,26 +1,46 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { scan, bind } from 'react-gun';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+const Item = ({ name, clickHandler }) => (
+  <div className="item" onClick={clickHandler}>
+    <span>{name}</span>
+  </div>
+);
+
+const App = scan(({
+  '@state': { list = [] },
+  '@methods': { create, splice },
+}) => (
+  <div className="app">
+    <h1>Types</h1>
+    <div className="align-right">
+      <button onClick={create}>+</button>
     </div>
-  );
-}
+    {list.map(({ name }, id) => (
+      <Item clickHandler={splice(id)} key={name} name={name} />
+    ))}
+  </div>
+));
 
-export default App;
+const methods = (getState, { put }) => ({
+  create: () => {
+    const list = getState('list');
+    const name = prompt();
+    if (name) {
+      list.push({ name });
+      put('list', list);
+    }
+  },
+  splice: (index) => () => {
+    let list = getState('list');
+    list.splice(index, 1);
+    put('list', list);
+  },
+});
+const schema = {
+  list: {
+    type: 'stringified',
+    default: [],
+  },
+};
+export default bind('types', methods, schema)(App);
