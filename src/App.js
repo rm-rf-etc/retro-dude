@@ -1,46 +1,34 @@
 import React from 'react';
-import { scan, bind } from 'react-gun';
+import { bind } from 'react-gun';
+import { methods, schema } from './binders/bind-column-list';
+import Column from './column';
 
-const Item = ({ name, clickHandler }) => (
-  <div className="item" onClick={clickHandler}>
-    <span>{name}</span>
-  </div>
-);
 
-const App = scan(({
-  '@state': { list = [] },
-  '@methods': { create, splice },
-}) => (
-  <div className="app">
-    <h1>Types</h1>
-    <div className="align-right">
-      <button onClick={create}>+</button>
-    </div>
-    {list.map(({ name }, id) => (
-      <Item clickHandler={splice(id)} key={name} name={name} />
-    ))}
-  </div>
-));
+const App = bind('columns', methods, schema)(({
+	'@state': { columnsList = [] },
+	'@methods': { createColumn },
+}) => {
+	const len = columnsList.length;
 
-const methods = (getState, { put }) => ({
-  create: () => {
-    const list = getState('list');
-    const name = prompt();
-    if (name) {
-      list.push({ name });
-      put('list', list);
-    }
-  },
-  splice: (index) => () => {
-    let list = getState('list');
-    list.splice(index, 1);
-    put('list', list);
-  },
+	const columnComponents = columnsList.map(({ name, uid }) => {
+		const pos = columnsList.findIndex(c => c.uid === uid) + 1;
+		return (
+			<Column {...{pos, uid, name}} key={uid} />
+		);
+	});
+
+	return (
+		<div className="app" style={{ gridTemplateColumns: `repeat(${len}, 1fr)` }}>
+			<div className="row1" style={{ gridColumn: `1 / ${len + 1}` }}>
+				<h1>Retro Dude</h1>
+				<button className="add-column-btn" onClick={createColumn}>Add Column</button>
+				<p>
+					<h4>retro dude is retro</h4>
+				</p>
+			</div>
+			{columnComponents}
+		</div>
+	);
 });
-const schema = {
-  list: {
-    type: 'stringified',
-    default: [],
-  },
-};
-export default bind('types', methods, schema)(App);
+
+export default App;
