@@ -1,10 +1,10 @@
 import React from 'react';
 import { bind } from 'react-gun';
-import { methods, schema } from './binders/bind-column-list';
+import getBindings from './binders/bind-column-list';
 import Column from './column';
 
 
-const App = bind('columns', methods, schema)(({
+const App = bind(getBindings('columns'), ({
 	'@state': { columnsList = [] },
 	'@methods': { createColumn },
 }) => {
@@ -22,9 +22,9 @@ const App = bind('columns', methods, schema)(({
 			<div className="row1" style={{ gridColumn: `1 / ${len + 1}` }}>
 				<h1>Retro Dude</h1>
 				<button className="add-column-btn" onClick={createColumn}>Add Column</button>
-				<p>
+				<div>
 					<h4>retro dude is retro</h4>
-				</p>
+				</div>
 			</div>
 			{columnComponents}
 		</div>

@@ -1,30 +1,34 @@
 
-export const methods = (getState, { put }) => ({
+const bindings = (dataRef) => ({
 
-	createColumn: () => {
-		const name = prompt('Please give your column a name');
-		if (name) put('columnsList', getState('columnsList').concat([{ name }]));
+	dataRef,
+
+	schema: {
+		columnsList: ['stringified', []],
 	},
 
-	spliceColumn: (uid) => {
-		let columnsList = getState('columnsList');
-		columnsList.splice(columnsList.findIndex(i => i.uid === uid), 1);
-		put('columnsList', columnsList);
-	},
+	methods: (getState, { put }) => ({
 
-	renameColumn: (uid) => {
-		const name = prompt('Enter new name');
-		if (!name) return;
-		const columnsList = getState('columnsList');
-		const idx = columnsList.findIndex(c => c.uid === uid);
-		columnsList[idx].name = name;
-		put('columnsList', columnsList)
-	},
+		createColumn: () => {
+			const name = prompt('Please give your column a name');
+			if (name) put('columnsList', getState('columnsList').concat([{ name }]));
+		},
+
+		spliceColumn: (uid) => {
+			let columnsList = getState('columnsList');
+			columnsList.splice(columnsList.findIndex(i => i.uid === uid), 1);
+			put('columnsList', columnsList);
+		},
+
+		renameColumn: (uid) => {
+			const name = prompt('Enter new name');
+			if (!name) return;
+			const columnsList = getState('columnsList');
+			const idx = columnsList.findIndex(c => c.uid === uid);
+			columnsList[idx].name = name;
+			put('columnsList', columnsList)
+		},
+	}),
 });
 
-export const schema = {
-	columnsList: {
-		type: 'stringified',
-		default: [],
-	},
-};
+export default bindings;

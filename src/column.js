@@ -1,15 +1,15 @@
 import React from 'react';
 import PostsList from './posts';
 import { bind } from 'react-gun';
-import { methods, schema } from './binders/bind-column-list';
-import { methods as postMethods, schema as postSchema } from './binders/bind-posts-list';
+import getColumnBindings from './binders/bind-column-list';
+import getPostsListBindings from './binders/bind-posts-list';
 
 
-const Column = bind('columns', methods, schema)(({
+const Column = bind(getColumnBindings('columns'), ({
 	uid, name, pos,
 	'@methods': { spliceColumn, renameColumn },
 }) => {
-	const Posts = bind(`postsLists${pos}`, postMethods, postSchema)(PostsList);
+	const Posts = bind(getPostsListBindings(`postsLists${uid}`), PostsList);
 
 	return (
 		<div className="row2" style={{ gridColumn: pos }}>
