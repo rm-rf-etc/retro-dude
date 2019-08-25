@@ -1,7 +1,8 @@
+import { boards } from '../indices';
 
-const bindings = (dataRef) => ({
+const bindings = {
 
-	dataRef,
+	index: boards,
 
 	schema: {
 		postsList: ['stringified', []],

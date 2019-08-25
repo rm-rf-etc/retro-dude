@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './app';
-import { Data } from 'react-gun';
+import App from './components/app';
+import * as indices from './indices';
+import { Data } from 'react-substrate';
 import * as serviceWorker from './serviceWorker';
 
+
 ReactDOM.render(
-	<Data root="@pp">
+	<Data config={{ indices }}>
 		<App />
 	</Data>,
 	document.getElementById('root'),
