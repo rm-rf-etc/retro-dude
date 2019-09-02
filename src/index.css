@@ -55,6 +55,8 @@ code {
 	display: inline-block;
 	padding-left: 15px;
 	padding-right: 15px;
+}
+.add-column-btn:first-child {
 	margin-left: 20px;
 }
 
@@ -63,4 +65,9 @@ code {
 	border: 1px solid gray;
 	background: lightgrey;
 	padding: 5px;
+}
+
+ul {
+	list-style-type: none;
+	padding-left: 0;
 }

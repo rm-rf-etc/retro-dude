@@ -1,21 +1,41 @@
 import React from 'react';
-// import PostsList from './posts';
-// import postsConnector from './connectors/posts';
-import glue from '../connectors/boards';
-import { bind } from 'react-substrate';
+import { funnel } from 'react-substrate';
+import boardsBucket from '../buckets/boards';
 
-const Column = bind(glue('BOARDS'), ({
-	uid,
-	name,
-	pos,
-	'@methods': { deleteBoard, renameBoard },
-}) => (
-	<div className="row2" style={{ gridColumn: pos }}>
-		<button onClick={() => renameBoard(uid)}>rename board</button>
-		<button onClick={() => deleteBoard(uid)}>delete board</button>
-		<h2>{name}</h2>
-		<Posts />
-	</div>
-));
+const Boards = ({
+	bucketState: {
+		"_$": boardList,
+	},
+	bucketMethods: {
+		setOne,
+	},
+}) => {
+	const len = 1;
+	return (
+		<div className="app" style={{ gridTemplateColumns: `repeat(${len}, 1fr)` }}>
+			<div className="row1" style={{ gridColumn: `1 / ${len + 1}` }}>
+				<h1>Retro Dude</h1>
+				<button
+					className="add-column-btn"
+					onClick={setOne}
+				>
+					Insert
+				</button>
+				<div>
+					<h4>retro dude is retro</h4>
+				</div>
+				<ul>
+					<li>
+						<pre>{JSON.stringify(boardList, null, "  ")}</pre>
+					</li>
+				</ul>
+			</div>
+		</div>
+	);
+};
 
-export default Column;
+export default funnel(
+	boardsBucket,
+	["_$"],
+	Boards,
+);

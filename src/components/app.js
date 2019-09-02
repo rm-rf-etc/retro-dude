@@ -1,27 +1,35 @@
-import React from 'react';
-import { bind } from 'react-substrate';
-import connectors from '../connectors/boards';
-// import Board from './boards';
+// import React from 'react';
+import Boards from './boards';
+// import { funnel } from 'react-substrate';
+// import formBucket from '../buckets/form';
 
+// const App = ({
+// 	bucketState: {
+// 		input1,
+// 		num1,
+// 		input2,
+// 		num2,
+// 	},
+// 	bucketMethods: {
+// 		setInput1,
+// 		increment1,
+// 		setInput2,
+// 		increment2,
+// 	},
+// }) => (
+// 	<div>
+// 		<div>
+// 			<input type="text" value={input1} onChange={setInput1}></input>
+// 			<input type="text" value={input2} onChange={setInput2}></input>
+// 		</div>
+// 		<Boards />
+// 	</div>
+// );
 
-const App = ({
-	'@state': { boards = [] },
-	'@methods': { addBoard, addColumn },
-}) => {
-	const len = boards.length;
+export default Boards;
 
-	return (
-		<div className="app" style={{ gridTemplateColumns: `repeat(${len}, 1fr)` }}>
-			<div className="row1" style={{ gridColumn: `1 / ${len + 1}` }}>
-				<h1>Retro Dude</h1>
-				<button className="add-column-btn" onClick={addBoard}>Add Board</button>
-				<button className="add-column-btn" onClick={addColumn}>Add Column</button>
-				<div>
-					<h4>retro dude is retro</h4>
-				</div>
-			</div>
-		</div>
-	);
-};
-
-export default bind(connectors, App);
+// export default funnel(
+// 	formBucket,
+// 	["input1", "input2", "num1", "num2"],
+// 	App,
+// );

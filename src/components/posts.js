@@ -1,8 +1,14 @@
 import React from 'react';
 
 const PostsList = ({
-	'@state': { postsList = [] },
-	'@methods': { edit, createPost, splice },
+	bucketState: {
+		postsList = [],
+	},
+	bucketMethods: {
+		edit,
+		createPost,
+		splice,
+	},
 }) => (
 	<div>
 		<button onClick={createPost}>add</button>
