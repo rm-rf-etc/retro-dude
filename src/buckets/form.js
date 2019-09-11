@@ -1,6 +1,6 @@
-import { bucket } from "../data/tank";
+import tank from "../data/tank";
 
-export default bucket("LOCAL.FORM", {
+export default tank.bucket("LOCAL.FORM", {
 
 	properties: {
 		input1: "",

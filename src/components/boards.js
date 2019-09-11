@@ -1,5 +1,4 @@
 import React from 'react';
-import { funnel } from 'react-substrate';
 import boardsBucket from '../buckets/boards';
 
 const Boards = ({
@@ -34,8 +33,6 @@ const Boards = ({
 	);
 };
 
-export default funnel(
-	boardsBucket,
-	["_$"],
-	Boards,
-);
+export default boardsBucket.tap(Boards, [
+	"_$",
+]);

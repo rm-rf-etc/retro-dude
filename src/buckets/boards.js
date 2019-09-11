@@ -1,7 +1,7 @@
-import { bucket } from "../data/tank";
-import dimensional from "react-substrate/structures/dimensional";
+import tank from "../data/tank";
+import dimensional from "weir/src/structures/dimensional";
 
-export default bucket("GLOBAL.BOARDS", dimensional({
+export default tank.bucket("GLOBAL.BOARDS", dimensional({
 
 	default: {
 		name: "Your New Board",
